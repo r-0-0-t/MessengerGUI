@@ -27,7 +27,7 @@ class ClientSend implements Runnable{
     }
     
     private String toBeSend = "";
-    boolean notSent = false;
+    volatile boolean notSent = false;
     
     public void sendText(String str) {
         notSent = true;
@@ -40,7 +40,6 @@ class ClientSend implements Runnable{
             try {
                 out = new DataOutputStream(socket.getOutputStream());
                 while(true) {
-                    Thread.sleep(0);
                     if(notSent) {
                         out.writeUTF(toBeSend);
                         out.flush();
@@ -50,9 +49,7 @@ class ClientSend implements Runnable{
                 
             } catch (IOException ex) {
                 System.out.println(ex);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ClientSend.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } 
             
             out.close();
             socket.close();

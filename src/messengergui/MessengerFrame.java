@@ -46,6 +46,7 @@ public class MessengerFrame extends javax.swing.JFrame implements Runnable{
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         fieldInbox.setEditable(false);
+        fieldInbox.setAutoscrolls(false);
         jScrollPane1.setViewportView(fieldInbox);
 
         fieldMessage.setToolTipText("Write Message");
@@ -140,13 +141,12 @@ public class MessengerFrame extends javax.swing.JFrame implements Runnable{
     public void run() {
         while(recieve.quit == false) {
             try {
-                Thread.sleep(0);
                 if(recieve.notShown) {
                     fieldInbox.setText(fieldInbox.getText() + "\n" + recieve.toBeShown);
                     recieve.notShown = false;
                 }
-            } catch (InterruptedException ex) {
-                Logger.getLogger(MessengerFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                System.out.println(ex);
             }
         }
     }

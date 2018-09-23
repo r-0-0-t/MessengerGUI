@@ -26,7 +26,7 @@ public class ClientRecieve implements Runnable {
     }
     
     public String toBeShown;
-    public boolean notShown = false;
+    volatile public boolean notShown = false;
     
     private void recieveText(String str) {
         notShown = true;
@@ -40,18 +40,15 @@ public class ClientRecieve implements Runnable {
         try {
             try {
                 in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-                Thread.sleep(0);
-                while(!quit) {
+                while(true) {
                     toBeShown = in.readUTF();
                 recieveText(toBeShown);
                 System.out.println(toBeShown + " Recieved");
                 }
                 
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 System.out.println(ex);
-            } catch (InterruptedException ex) { 
-                Logger.getLogger(ClientRecieve.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } 
             
             in.close();
             socket.close();

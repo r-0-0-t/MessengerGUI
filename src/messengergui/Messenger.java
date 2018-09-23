@@ -17,7 +17,7 @@ public class Messenger {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Client client = new Client("192.168.0.111", 5000);
+        Client client = new Client("localhost", 5000);
         ClientSend send = new ClientSend(client);
         ClientRecieve recieve = new ClientRecieve(client);
         MessengerFrame frame = new MessengerFrame(send,recieve);
